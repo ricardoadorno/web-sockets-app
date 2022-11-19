@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home socket={socket} />}></Route>
-        <Route path="/chat" element={<VideoPage socket={socket} />}></Route>
+        <Route path="/room/:id" element={<VideoPage socket={socket} />} exact />
       </Routes>
     </BrowserRouter>
   );

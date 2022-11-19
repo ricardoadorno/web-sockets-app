@@ -2,9 +2,9 @@
   "name": "watch-party-app-challenge",
   "version": "1.0.0",
   "description": "A watch party app using node express",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "nodemon app.js"
+    "start": "nodemon server.js"
   },
   "repository": {
     "type": "git",

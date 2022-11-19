@@ -1,10 +1,11 @@
 import React from "react";
-import UserBar from "../components/UserBar";
+import Chat from "../components/Chat";
 
 function VideoPage({ socket }) {
   return (
     <div>
-      <UserBar socket={socket} />
+      <Chat socket={socket} />
+      <input type="text" />
     </div>
   );
 }

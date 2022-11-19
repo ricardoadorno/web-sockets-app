@@ -1,21 +1,17 @@
 const express = require("express");
 const app = express();
 const http = require("http").Server(app);
-const PORT = 4000;
+const ioUtilities = require("./utilities/io");
+
 const socketIO = require("socket.io")(http, {
   cors: {
     origin: "http://localhost:3000",
   },
 });
 
-// ! CONEXÂO
-socketIO.on("connection", (socket) => {
-  console.log(`User connected: ${socket.id}`);
+const PORT = process.env.PORT || 4000;
 
-  socket.on("join", (data) => {
-    console.log("joining user", data);
-  });
-});
+ioUtilities.setupIO(socketIO);
 
 http.listen(PORT, () => {
   console.log(`Server listening on ${PORT}`);
