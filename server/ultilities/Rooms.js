@@ -8,8 +8,8 @@ class Rooms {
     this.userMap = {}; // maps socket id to rooms
   }
 
-  addRoom(roomId) {
-    if (!this.rooms[roomId]) this.rooms[roomId] = { users: [] };
+  addRoom(roomId, videoId) {
+    if (!this.rooms[roomId]) this.rooms[roomId] = { users: [], videoId };
   }
 
   getRoom(roomId) {
@@ -17,7 +17,7 @@ class Rooms {
   }
 
   addUser(roomId, name, userId) {
-    this.rooms[roomId].users.push({ name, id: userId, roomId });
+    this.rooms[roomId].users?.push({ name, id: userId, roomId });
     this.userMap[userId] = roomId;
   }
 
@@ -27,25 +27,18 @@ class Rooms {
     return users.find((user) => user.id === userId);
   }
 
-  //
+  // !
 
   getUserList(roomId) {
     const room = this.rooms[roomId];
     if (room) {
-      return room["users"];
-    }
-  }
-
-  //
-
-  setVideoId(roomId, videoId) {
-    if (this.rooms[roomId]) {
-      this.rooms[roomId]["videoId"] = videoId;
+      return room;
     }
   }
 
   removeUser(userId) {
     const roomId = this.userMap[userId];
+
     let _user = null;
 
     if (roomId) {
@@ -70,16 +63,20 @@ class Rooms {
     return null;
   }
 
+  // !
+
+  setVideoId(roomId, videoId) {
+    if (this.rooms[roomId]) {
+      this.rooms[roomId]["videoId"] = videoId;
+    }
+  }
+
   removeRoom(roomId) {
     if (this.rooms[roomId]["users"].length === 0) delete this.rooms[roomId];
   }
 
   showInfo() {
-    const rooms = Object.keys(this.rooms);
-    rooms.forEach((roomId) => {
-      console.log(`Room: ${roomId}`);
-      this.rooms[roomId]["users"].forEach((user) => console.log(user));
-    });
+    const userMap = Object.keys(this.userMap);
   }
 }
 

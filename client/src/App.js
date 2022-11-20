@@ -1,7 +1,7 @@
 import socketIO from "socket.io-client";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Home from "./Home";
-// import Rooms from "./Rooms";
+import Home from "./pages/Home";
+import VideoRoom from "./pages/VideoRoom";
 
 const socket = socketIO.connect("http://localhost:4000");
 
@@ -10,7 +10,7 @@ function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Home socket={socket} />}></Route>
-        {/* <Route path="/room/:id" element={<Rooms socket={socket} />} /> */}
+        <Route path="/room/:id" element={<VideoRoom socket={socket} />} />
       </Routes>
     </BrowserRouter>
   );
