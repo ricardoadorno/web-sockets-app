@@ -24,7 +24,7 @@ class Rooms {
   getUser(userId) {
     const room = this.userMap[userId];
     const users = this.getUserList(room);
-    return users.find((user) => user.id === userId);
+    return users?.find((user) => user.id === userId);
   }
 
   // !

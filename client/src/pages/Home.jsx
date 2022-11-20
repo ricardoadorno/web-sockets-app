@@ -37,24 +37,24 @@ function Home({ socket }) {
   };
 
   return (
-    <main class=" flex-col justify-center content-center max-w-lg m-auto ">
+    <main className=" flex-col justify-center content-center max-w-lg m-auto ">
       <h1 className="text-3xl font-bold underline text-center mt-4 mb-2">
         App de Conferências
       </h1>
       <form class="form-control" action="submit" onSubmit={handleAddUser}>
         <h4 className="text-xl text-accent">Entre em uma sala</h4>
         <div className="divider w-32 m-0"></div>
-        <label class="label">Nome</label>
+        <label className="label">Nome</label>
         <input
-          class="input input-bordered input-sm w-full "
+          className="input input-bordered input-sm w-full "
           type="text"
           value={userNew}
           onChange={(e) => setUserNew(e.target.value)}
         />
 
-        <label class="label">Código da Sala</label>
+        <label className="label">Código da Sala</label>
         <input
-          class="input input-bordered input-sm w-full "
+          className="input input-bordered input-sm w-full "
           type="text"
           value={room}
           onChange={(e) => setRoom(e.target.value)}
@@ -66,19 +66,23 @@ function Home({ socket }) {
       </form>
 
       <div className="divider m-0 "></div>
-      <form class="form-control" action="submit" onSubmit={handleCreateRoom}>
+      <form
+        className="form-control"
+        action="submit"
+        onSubmit={handleCreateRoom}
+      >
         <h4 className="text-xl text-accent">Crie uma sala</h4>
         <div className="divider w-32 m-0"></div>
-        <label class="label">Nome</label>
+        <label className="label">Nome</label>
         <input
-          class="input input-bordered input-sm w-full "
+          className="input input-bordered input-sm w-full "
           type="text"
           value={host}
           onChange={(e) => setHost(e.target.value)}
         />
-        <label class="label">Link do vídeo</label>
+        <label className="label">Link do vídeo</label>
         <input
-          class="input input-bordered input-sm w-full "
+          className="input input-bordered input-sm w-full "
           type="text"
           value={youtubeUrl}
           onChange={(e) => setYoutubeUrl(e.target.value)}

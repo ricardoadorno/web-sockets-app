@@ -1,7 +1,6 @@
 import React from "react";
 import { useEffect } from "react";
 import { useState } from "react";
-import { getVideoId } from "../ultilities/getVideoId";
 import { useNavigate } from "react-router-dom";
 
 function VideoRoom({ socket }) {
@@ -9,25 +8,18 @@ function VideoRoom({ socket }) {
 
   const [userList, setUserList] = useState([]);
   const [youtubeLink, setYoutubeLink] = useState("");
-  const [newYoutubeLink, setNewYoutubeLink] = useState("");
-
-  const handleNewLink = (e) => {
-    e.preventDefault();
-
-    const videoId = getVideoId(newYoutubeLink);
-
-    socket.emit("changeVideo", { videoId });
-  };
+  const [code, setCode] = useState("");
 
   useEffect(() => {
     socket.on("updateUserList", (data) => {
       setUserList(data.users);
       setYoutubeLink(data.videoId);
+      setCode(data.userList[0].roomId);
       return () => {
         socket.off("updateUserList");
       };
     });
-  }, [socket, youtubeLink]);
+  }, [socket]);
 
   const handleLeave = () => {
     socket.emit("leave", { userId: socket.id });
@@ -35,28 +27,48 @@ function VideoRoom({ socket }) {
   };
 
   return (
-    <div>
-      <h1>Sala de Conferência</h1>
+    <main className=" flex justify-center content-center h-full mt-14">
+      <div className="p-4 mr-8">
+        <h1 className="text-xl font-bold underline text-center mt-4 mb-2">
+          Sala de Conferência
+        </h1>
 
-      <ul>
-        {userList.map((user) => (
-          <li key={user.id}>{user.name}</li>
-        ))}
-      </ul>
-      <br></br>
-
-      <iframe
-        width="709"
-        height="399"
-        src={`https://www.youtube.com/embed/${youtubeLink}`}
-        title="Skyrim - Music & Ambience - Day"
-        frameborder="0"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen
-      ></iframe>
-
+        <ul className="menu bg-base-100 w-56 gap-1">
+          {userList.map((user) => (
+            <li key={user.id}>{user.name}</li>
+          ))}
+        </ul>
+        <button className="btn m-4" onClick={handleLeave}>
+          Sair
+        </button>
+      </div>
       <div>
-        <form action="submit" onSubmit={handleNewLink}>
+        <div className="m-4">
+          Código da Sala:
+          <strong
+            className="hover:underline hover:cursor-pointer"
+            onClick={() => {
+              navigator.clipboard.writeText(this.state.textToCopy);
+            }}
+          >
+            {code}
+          </strong>
+          <i className="fa-solid fa-clipboard"></i>
+        </div>
+        <iframe
+          width="709"
+          height="399"
+          src={`https://www.youtube.com/embed/${youtubeLink}`}
+          title="Skyrim - Music & Ambience - Day"
+          frameborder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowfullscreen
+        ></iframe>
+      </div>
+      <div>
+        {
+          // TODO fix this new link form
+          /* <form action="submit" onSubmit={handleNewLink}>
           <label>Novo Youtube</label>
           <input
             type="text"
@@ -65,9 +77,10 @@ function VideoRoom({ socket }) {
           />
           <button type="submit">Submit</button>
         </form>
-        <button onClick={handleLeave}>Sair</button>
+         */
+        }
       </div>
-    </div>
+    </main>
   );
 }
 

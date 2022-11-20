@@ -60,6 +60,7 @@ socketIO.on("connection", (socket) => {
       .emit("updateUserList", Rooms.getUserList(user.roomId));
   });
 
+  // TODO fix user disconnect
   socket.on("disconnect", () => {
     const user = Rooms.removeUser(socket.id);
 
